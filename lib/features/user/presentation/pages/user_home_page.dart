@@ -98,7 +98,7 @@ class _UserLoadedWidgetState extends State<UserHomePage> {
                               ),
                             ),
                           )
-                        : Text('you have no courses');
+                        : Center(child: Text('you have courses'));
                   },
                   orElse: () => CircularProgressIndicator(),
                 );

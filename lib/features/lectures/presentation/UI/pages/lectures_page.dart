@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:online_learning/features/lectures/domain/entities/lecture_entity.dart';
 import 'package:online_learning/features/lectures/presentation/UI/pages/lecture_form_page.dart';
 import 'package:online_learning/features/lectures/presentation/UI/widgets/lecture_card.dart';
 import 'package:online_learning/features/lectures/presentation/bloc/lecture_bloc.dart';
 import 'package:online_learning/features/user/data/models/user_mode.dart';
+import 'package:sleek_circular_slider/sleek_circular_slider.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LecturesPage extends StatefulWidget {
   final String courseTitle;
@@ -24,17 +27,49 @@ class _LecturesPageState extends State<LecturesPage> {
 
   @override
   Widget build(BuildContext context) {
+    context.read<LectureBloc>().add(
+        LectureEvent.getAllLecturesByCourse(courseTitle: widget.courseTitle));
     return SafeArea(
       child: Scaffold(
         body: BlocBuilder<LectureBloc, LectureState>(
           builder: (context, state) {
             return state.maybeMap(
               allLecturesLoaded: (lecturesState) {
-                final lectures = lecturesState.lecturesEntities;
-                return ListView.builder(
-                  itemCount: lectures.length,
-                  itemBuilder: (context, index) =>
-                      LectureCard(courseTitle: lectures[index].title),
+                // final lectures = lecturesState.lecturesEntities;
+                final lectures = [
+                  LectureEntity(
+                    fileUrl: 'url',
+                    title: 'new title',
+                    description: 'desc',
+                  ),
+                  LectureEntity(
+                    fileUrl: 'url2',
+                    title: 'new title2',
+                    description: 'desc2',
+                  ),
+                ];
+                return Column(
+                  children: [
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: lectures.length,
+                        itemBuilder: (context, index) => LectureCard(
+                          courseTitle: lectures[index].title,
+                        ),
+                      ),
+                    ),
+                    SleekCircularSlider(
+                      initialValue: 2,
+                      onChange: (val) {},
+                      appearance: CircularSliderAppearance(
+                        size: 80.h,
+                        customColors: CustomSliderColors(
+                          progressBarColor: Colors.orange,
+                          dotColor: Colors.transparent,
+                        ),
+                      ),
+                    ),
+                  ],
                 );
               },
               orElse: () => Text('orElse'),
