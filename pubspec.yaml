@@ -24,6 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
   cached_network_image: ^2.5.0
+  bubble: ^1.2.1
   auto_route: ^0.6.9
   cloud_firestore: ^0.16.0
   cupertino_icons: ^1.0.0
@@ -56,8 +57,6 @@ dependencies:
   sleek_circular_slider: ^1.2.0+web
   flutter_bloc_devtools: ^0.1.1
   flutter_uploader: ^1.2.1
-  chat_list: ^2.0.0
-  bubble: ^1.2.1
 
 dev_dependencies:
   flutter_test:

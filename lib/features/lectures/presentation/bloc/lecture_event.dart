@@ -22,4 +22,16 @@ abstract class LectureEvent with _$LectureEvent {
   const factory LectureEvent.createCourse({
     @required String courseTitle,
   }) = _CreateCourse;
+
+  const factory LectureEvent.submitUser({
+    @required String userId,
+    @required String courseTitle,
+    @required String lectureTitle,
+  }) = _SubmitUser;
+
+  const factory LectureEvent.getAllSubmittedUsers({
+    @required String userId,
+    @required String courseTitle,
+    @required String lectureTitle,
+  }) = _GetAllSubmittedUsers;
 }

@@ -21,11 +21,11 @@ import 'injection.config.dart';
 
 final sl = GetIt.I;
 
-Future<void> init() async {
-  sl.registerLazySingleton<LecturesRemoteDataSource>(
-    () => FirebaseLecturesRemoteDataSource(),
-  );
-}
+// Future<void> init() async {
+//   sl.registerLazySingleton<LecturesRemoteDataSource>(
+//     () => FirebaseLecturesRemoteDataSource(),
+//   );
+// }
 
 //   // USECASES
 //   sl.registerLazySingleton(() => GetUser(sl()));

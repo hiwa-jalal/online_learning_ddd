@@ -35,7 +35,7 @@ class LecturesRepositoryImpl extends LecturesRepository {
       final lecture = await remoteDataSource.uploadLecture(
         fileUrl: fileUrl,
         user: user,
-        title: title,
+        lectureTitle: title,
         description: description,
         courseTitle: courseTitle,
       );
@@ -90,6 +90,44 @@ class LecturesRepositoryImpl extends LecturesRepository {
       final courseIds =
           await remoteDataSource.getAllCoursesByUserId(userId: userId);
       return right(courseIds);
+    } catch (e) {
+      print(e.toString());
+      return left(LectureFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> submitUser({
+    @required String userId,
+    @required String courseTitle,
+    @required String lectureTitle,
+  }) async {
+    try {
+      final submittedUser = await remoteDataSource.submitUser(
+        userId: userId,
+        courseTitle: courseTitle,
+        lectureTitle: lectureTitle,
+      );
+      return right(submittedUser);
+    } catch (e) {
+      print(e.toString());
+      return left(LectureFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<String>>> getAllSubmittedUsers({
+    @required String userId,
+    @required String courseTitle,
+    @required String lectureTitle,
+  }) async {
+    try {
+      final submittedUsers = await remoteDataSource.getAllSubmittedUsers(
+        userId: userId,
+        courseTitle: courseTitle,
+        lectureTitle: lectureTitle,
+      );
+      return right(submittedUsers);
     } catch (e) {
       print(e.toString());
       return left(LectureFailure());

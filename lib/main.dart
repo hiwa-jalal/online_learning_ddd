@@ -15,7 +15,7 @@ void main() async {
   // await observer.connect();
   // Bloc.observer = observer;
 
-  di.configureInjection();
   await Firebase.initializeApp();
+  await di.configureInjection();
   runApp(MyApp());
 }

@@ -12,9 +12,12 @@ import 'package:online_learning/features/lectures/domain/usecases/download_lectu
 import 'package:online_learning/features/lectures/domain/usecases/get_all_courses_by_user_id.dart';
 import 'package:online_learning/features/lectures/domain/usecases/get_all_lectures.dart';
 import 'package:online_learning/features/lectures/domain/usecases/get_all_lectures_by_user_id.dart';
+import 'package:online_learning/features/lectures/domain/usecases/get_all_submitted_users.dart';
+import 'package:online_learning/features/lectures/domain/usecases/submit_user.dart';
 import 'package:online_learning/features/lectures/domain/usecases/upload_lecture.dart';
 import 'package:online_learning/features/lectures/presentation/bloc/lecture_bloc.dart';
 import 'package:online_learning/features/lectures/presentation/bloc/progress_bloc/progress_bloc.dart';
+import 'package:online_learning/features/user/cubit/submit_cubit.dart';
 import 'package:online_learning/features/user/data/datasources/user_remote_data_source.dart';
 import 'package:online_learning/features/user/data/models/user_mode.dart';
 import 'package:online_learning/features/user/data/repositories/user_repository_impl.dart';
@@ -30,6 +33,16 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
+          create: (_) => SubmitCubit(
+            getAllSubmittedUsers: GetAllSubmittedUsers(
+              lecturesRepository: LecturesRepositoryImpl(
+                FirebaseLecturesRemoteDataSource(
+                    lectureTask: sl<LectureTask>(), dio: Dio()),
+              ),
+            ),
+          ),
+        ),
+        BlocProvider(
           create: (_) => sl<ChatBloc>(),
         ),
         BlocProvider(
@@ -40,6 +53,7 @@ class MyApp extends StatelessWidget {
                 GetUsers(UserRepositoryImpl(FirebaseUserRemoteDataSource())),
           ),
         ),
+        // BlocProvider(create: (_) => sl<LectureBloc>()),
         BlocProvider(
           create: (_) => LectureBloc(
             downloadLecture: DownloadLecture(
@@ -67,6 +81,16 @@ class MyApp extends StatelessWidget {
                 FirebaseLecturesRemoteDataSource(
                     dio: Dio(), lectureTask: sl<LectureTask>()))),
             getAllCoursesByUserId: GetAllCoursesByUserId(
+              lecturesRepository: LecturesRepositoryImpl(
+                FirebaseLecturesRemoteDataSource(
+                    lectureTask: sl<LectureTask>(), dio: Dio()),
+              ),
+            ),
+            submitUser: SubmitUser(
+                lecturesRepository: LecturesRepositoryImpl(
+                    FirebaseLecturesRemoteDataSource(
+                        dio: Dio(), lectureTask: sl<LectureTask>()))),
+            getAllSubmittedUsers: GetAllSubmittedUsers(
               lecturesRepository: LecturesRepositoryImpl(
                 FirebaseLecturesRemoteDataSource(
                     lectureTask: sl<LectureTask>(), dio: Dio()),
